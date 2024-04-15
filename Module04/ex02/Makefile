@@ -1,0 +1,26 @@
+NAME = exec01 #exec name
+
+#CC = c++ #compiler
+CC = clang++
+
+CFLAGS = -Wall -Wextra -Werror # -pedantic -std=c++98 #pedantic MAC isue
+
+SRCS = main.cpp AAnimal.cpp Cat.cpp Dog.cpp Brain.cpp #only the .cpp files
+
+OBJS = $(SRCS:.cpp=.o)
+OBJS := $(addprefix obj/, $(OBJS))  #prefix to create obj directory
+
+all: $(NAME)
+
+obj/%.o:%.cpp
+	mkdir -p obj
+	$(CC) -c $(CFLAGS) $< -o $@
+
+$(NAME): $(OBJS)
+	$(CC) $(CFLAGS) $(OBJS) -o $(NAME)
+
+clean:
+	rm -fr obj
+fclean: clean
+	rm -fr $(NAME)
+re: fclean all
